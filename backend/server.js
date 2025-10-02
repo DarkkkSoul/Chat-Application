@@ -23,6 +23,8 @@ io.on('connection', (socket) => {
     console.log(`${userName} joined the room`);
     // joining the user into room
     await socket.join(ROOM);
+    // emitting the event roomNotice to frontend
+    socket.to(ROOM).emit("roomNotice",userName);
   })
 });
 

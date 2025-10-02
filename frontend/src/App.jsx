@@ -19,8 +19,12 @@ function App() {
 
   useEffect(()=>{
     socket.current = connectWS();
+
     socket.current.on("connect",()=>{
-      
+      // adding an event listener => roomNotice which is emitted from the backend
+      socket.current.on('roomNotice',(userName)=>{
+        console.log(`${userName} joined the room`);
+      })
     })
   },[]);
 
