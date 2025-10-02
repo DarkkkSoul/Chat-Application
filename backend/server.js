@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
 // adding an event listener => sendMessage which is emitted from the frontend
   socket.on("sendMessage",(message)=>{
     // emitting the event message to frontend
+    console.log(message);
     socket.to(ROOM).emit("message",message);
   })
 });

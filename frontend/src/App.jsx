@@ -30,6 +30,11 @@ function App() {
         setMessages((prev)=>[...prev,message])
       })
     })
+    return ()=>{
+      socket.current.off("connect")
+      socket.current.off("roomNotice")
+      socket.current.off("message")
+    }
   },[]);
 
   const handleSendMessage = (e) => {
