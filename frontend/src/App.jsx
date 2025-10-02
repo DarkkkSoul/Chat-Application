@@ -124,15 +124,27 @@ function App() {
               <p className="text-gray-400">Send your first message to get things rolling!</p>
             </div>
           ) : (
-            messages.map((message) => (
-              <div key={message.id} className="bg-gradient-to-r from-gray-700 to-gray-800 p-4 rounded-xl border border-gray-600 shadow-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-blue-400">{message.sender}</span>
-                  <span className="text-gray-400 text-sm">{message.timestamp}</span>
+            messages.map((message) => {
+              const isCurrentUser = message.sender === userName;
+              return (
+                <div 
+                  key={message.id} 
+                  className={`p-4 rounded-xl border shadow-lg ${
+                    isCurrentUser 
+                      ? 'bg-gradient-to-r from-gray-700 to-gray-800 border-gray-600' 
+                      : 'bg-gradient-to-r from-emerald-900 to-teal-900 border-emerald-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`font-semibold ${isCurrentUser ? 'text-blue-400' : 'text-emerald-300'}`}>
+                      {message.sender}
+                    </span>
+                    <span className="text-gray-400 text-sm">{message.timestamp}</span>
+                  </div>
+                  <p className="text-white font-medium leading-relaxed">{message.text}</p>
                 </div>
-                <p className="text-white font-medium leading-relaxed">{message.text}</p>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
 
