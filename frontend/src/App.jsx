@@ -1,10 +1,12 @@
-import { useState } from 'react'
-
+import { useEffect, useRef, useState } from 'react'
+import { connectWS } from './ws.js';
 function App() {
   const [userName, setUserName] = useState('')
   const [isNameSet, setIsNameSet] = useState(false)
   const [messages, setMessages] = useState([])
   const [currentMessage, setCurrentMessage] = useState('')
+
+  const socket = useRef();
 
   const handleNameSubmit = (e) => {
     e.preventDefault()
@@ -12,6 +14,10 @@ function App() {
       setIsNameSet(true)
     }
   }
+
+  useEffect(()=>{
+    socket.current = connectWS();
+  },[]);
 
   const handleSendMessage = (e) => {
     e.preventDefault()
