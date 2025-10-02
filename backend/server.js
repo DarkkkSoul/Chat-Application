@@ -26,6 +26,11 @@ io.on('connection', (socket) => {
     // emitting the event roomNotice to frontend
     socket.to(ROOM).emit("roomNotice",userName);
   })
+// adding an event listener => sendMessage which is emitted from the frontend
+  socket.on("sendMessage",(message)=>{
+    // emitting the event message to frontend
+    socket.to(ROOM).emit("message",message);
+  })
 });
 
 server.listen(8989, () => {

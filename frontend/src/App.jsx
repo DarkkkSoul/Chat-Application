@@ -25,6 +25,10 @@ function App() {
       socket.current.on('roomNotice',(userName)=>{
         console.log(`${userName} joined the room`);
       })
+      // adding an event listener => message which is emitted from the backend
+      socket.current.on("message",(message)=>{
+        setMessages((prev)=>[...prev,message])
+      })
     })
   },[]);
 
@@ -37,7 +41,9 @@ function App() {
         sender: userName,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
-      setMessages([...messages, newMessage])
+      setMessages((prev)=>[...prev,newMessage])
+      // emitting the event sendMessage to backend
+      socket.current.emit("sendMessage",newMessage);
       setCurrentMessage('')
     }
   }
