@@ -12,11 +12,16 @@ function App() {
     e.preventDefault()
     if (userName.trim()) {
       setIsNameSet(true)
+      // emitting the event joinRoom to backend
+      socket.current.emit("joinRoom",userName);
     }
   }
 
   useEffect(()=>{
     socket.current = connectWS();
+    socket.current.on("connect",()=>{
+      
+    })
   },[]);
 
   const handleSendMessage = (e) => {

@@ -4,19 +4,26 @@ import { Server } from 'socket.io';
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server,{
-  cors:{
-    origin:"http://localhost:5173",
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
   }
 });
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
 });
-// console.log(io);
+
+const ROOM ="group";
+
 io.on('connection', (socket) => {
-  console.log('a user connected',socket.id);
-  // console.log(socket);
+  console.log('a user connected', socket.id);
+  // adding an event listener => joinRoom which is emitted from the frontend
+  socket.on("joinRoom", async (userName) => {
+    console.log(`${userName} joined the room`);
+    // joining the user into room
+    await socket.join(ROOM);
+  })
 });
 
 server.listen(8989, () => {
